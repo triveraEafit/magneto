@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconocedor de Formularios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            background-color: #B0B3B7; /* Gris mate */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007B7F; /* Verde aguamarina oscuro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #005f5f; /* Color más oscuro al pasar el mouse */
+        }
+        input[type="file"] {
+            display: block;
+            margin: 10px 0;
+        }
+        .icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent; /* Fondo transparente */
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .icon-button img {
+            width: 40px; /* Ajusta el tamaño de la imagen según necesites */
+            height: auto;
+        }
+        /* Formulario para rellenar */
+        .form-section {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="email"], input[type="tel"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CV MANAGER</h1>
+    
+    <div class="form-section">
+        <h2>Formulario de Datos</h2>
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="apellido" placeholder="Apellido">
+        <input type="email" id="email" placeholder="Email">
+        <input type="tel" id="telefono" placeholder="Teléfono">
+        <input type="text" id="direccion" placeholder="Dirección">
+        <textarea id="experiencia" placeholder="Experiencia"></textarea>
+        <textarea id="educacion" placeholder="Educación"></textarea>
+        <textarea id="habilidades" placeholder="Habilidades"></textarea>
+        <textarea id="resumen" placeholder="Resumen"></textarea>
+        <button id="load-data">Cargar Datos</button>
+
+    </div>
+    
+    <script src="crear_hoja_de_vida.js"></script>
+</body>
+</html>

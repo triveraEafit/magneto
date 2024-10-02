@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconocedor de Formularios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            background-color: #B0B3B7; /* Gris mate */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007B7F; /* Verde aguamarina oscuro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #005f5f; /* Color más oscuro al pasar el mouse */
+        }
+        input[type="file"] {
+            display: block;
+            margin: 10px 0;
+        }
+        .icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent; /* Fondo transparente */
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .icon-button img {
+            width: 40px; /* Ajusta el tamaño de la imagen según necesites */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>CV MANAGER</h1>
+    <input type="file" id="cv-file" accept=".pdf,.doc,.docx">
+    <button id="upload-cv">Subir Hoja de Vida</button>
+    <button id="create-cv">Crear Hoja de Vida</button>
+    <button id="fill-form">Rellenar Formulario</button>
+    
+    <button class="icon-button" id="button1">
+        <img src="imagenes/l.png" alt="Enlace 1">
+    </button>
+    <button class="icon-button" id="button2">
+        <img src="imagenes/c.png" alt="Enlace 2">
+    </button>
+    <button class="icon-button" id="button3">
+        <img src="imagenes/m.png" alt="Enlace 3">
+    </button>
+
+    <script src="popup.js"></script>
+</body>
+</html>
