@@ -1,4 +1,3 @@
-# formularios/views.py
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import HojaDeVida
@@ -17,9 +16,6 @@ def subir_hoja_de_vida(request):
         return JsonResponse({'message': 'Hoja de vida subida correctamente.'})
 
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
-
-from django.http import JsonResponse
-import json
 
 @csrf_exempt
 def crear_hoja_de_vida(request):
@@ -60,7 +56,7 @@ def crear_hoja_de_vida(request):
 
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
 
-
+@csrf_exempt
 def obtener_hoja_de_vida(request, id):
     try:
         hoja_de_vida = HojaDeVida.objects.get(id=id)

@@ -47,3 +47,45 @@ document.getElementById('button2').addEventListener('click', function() {
 document.getElementById('button3').addEventListener('click', function() {
     window.open('https://www.magneto365.com/es', '_blank'); // Cambia a tu enlace
 });
+
+// Funcionalidad para iniciar el reconocimiento de campos en pantalla
+document.getElementById('reconocimiento').addEventListener('click', async () => {
+    // Llamar a la función para iniciar el reconocimiento de formularios
+    await iniciarReconocimiento();
+});
+
+async function iniciarReconocimiento() {
+    try {
+        // Envía un mensaje al contenido de la página para iniciar el reconocimiento de campos
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: "reconocerCampos" });
+        });
+    } catch (error) {
+        console.error("Error al iniciar el reconocimiento:", error);
+    }
+}
+
+// Escuchar los campos detectados desde content.js y completar los datos
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+    if (request.action === "camposDetectados") {
+        const campos = request.campos;
+
+        // Solicita los datos de la hoja de vida desde Django
+        try {
+            const response = await fetch('http://localhost:8000/api/hoja-de-vida/1/');  // Cambia '1' por el ID adecuado de la hoja de vida
+            const data = await response.json();
+
+            // Rellena los campos en la página si hay coincidencias
+            for (const nombreCampo in campos) {
+                if (data[nombreCampo]) {
+                    campos[nombreCampo].value = data[nombreCampo];
+                }
+            }
+
+            alert('Formulario rellenado automáticamente.');
+        } catch (error) {
+            console.error('Error al obtener los datos de la hoja de vida:', error);
+            alert('Hubo un error al obtener los datos de la hoja de vida.');
+        }
+    }
+});
