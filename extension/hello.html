@@ -49,15 +49,29 @@
             width: 40px; /* Ajusta el tamaño de la imagen según necesites */
             height: auto;
         }
+        #image-paste-area {
+            border: 1px dashed #ccc;
+            padding: 10px;
+            height: 100px;
+            margin: 10px 0;
+            text-align: center;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <h1>CV MANAGER</h1>
     <input type="file" id="cv-file" accept=".pdf,.doc,.docx">
-    <button id="reconocimiento">Iniciar Reconocimiento</button>
     <button id="upload-cv">Subir Hoja de Vida</button>
     <button id="create-cv">Crear Hoja de Vida</button>
     <button id="fill-form">Rellenar Formulario</button>
+    <button id="reconocimiento">Iniciar Reconocimiento</button>
+
+    <!-- Área para pegar la imagen -->
+    <div id="image-paste-area" contenteditable="true">
+        Pega la imagen aquí (Ctrl+V)
+    </div>
+    <button id="upload-pasted-image">Subir Imagen Pegada</button>
     
     <button class="icon-button" id="button1">
         <img src="imagenes/l.png" alt="Enlace 1">

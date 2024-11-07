@@ -18,7 +18,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'formularios',  # tu aplicación
+    'formularios',
+    'rest_framework',
+    'api',  
 ]
 
 MIDDLEWARE = [
@@ -92,3 +94,5 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+TESSERACT_CMD = r'C:\Program Files\Tesseract-OCR\tesseract.exe'

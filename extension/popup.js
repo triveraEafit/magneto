@@ -1,3 +1,4 @@
+// Evento para subir la hoja de vida en formato de archivo
 document.getElementById('upload-cv').addEventListener('click', function() {
     const fileInput = document.getElementById('cv-file');
     const file = fileInput.files[0];
@@ -27,65 +28,106 @@ document.getElementById('upload-cv').addEventListener('click', function() {
     });
 });
 
-document.getElementById('fill-form').addEventListener('click', function() {
-    alert('Funcionalidad de rellenar formulario aún no implementada.');
-});
-
+// Botón para crear una nueva hoja de vida
 document.getElementById('create-cv').addEventListener('click', function() {
     window.open(chrome.runtime.getURL('crear_hoja_de_vida.html'), '_blank');
 });
 
-// Lógica para los botones de enlace
+// Enlaces a sitios de empleo
 document.getElementById('button1').addEventListener('click', function() {
-    window.open('https://www.linkedin.com/onboarding/start/profile-edit/new/', '_blank'); // Cambia a tu enlace
+    window.open('https://www.linkedin.com/onboarding/start/profile-edit/new/', '_blank');
 });
 
 document.getElementById('button2').addEventListener('click', function() {
-    window.open('https://co.computrabajo.com/', '_blank'); // Cambia a tu enlace
+    window.open('https://co.computrabajo.com/', '_blank');
 });
 
 document.getElementById('button3').addEventListener('click', function() {
-    window.open('https://www.magneto365.com/es', '_blank'); // Cambia a tu enlace
+    window.open('https://www.magneto365.com/es', '_blank');
 });
 
-// Funcionalidad para iniciar el reconocimiento de campos en pantalla
+// Evento para iniciar el reconocimiento de campos a partir de una captura de pantalla
 document.getElementById('reconocimiento').addEventListener('click', async () => {
-    // Llamar a la función para iniciar el reconocimiento de formularios
-    await iniciarReconocimiento();
+    await capturarPantallaYEnviar();
 });
 
-async function iniciarReconocimiento() {
+async function capturarPantallaYEnviar() {
     try {
-        // Envía un mensaje al contenido de la página para iniciar el reconocimiento de campos
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: "reconocerCampos" });
+        // Captura la pestaña actual como una imagen
+        chrome.tabs.captureVisibleTab(null, { format: "png" }, async (dataUrl) => {
+            if (dataUrl) {
+                // Convierte la imagen en blob para enviarla al servidor
+                const response = await fetch(dataUrl);
+                const blob = await response.blob();
+
+                const formData = new FormData();
+                formData.append("imagen", blob, "captura.png");
+
+                // Envía la imagen a la API para el reconocimiento OCR
+                fetch("http://localhost:8000/api/procesar-imagen/", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.camposDetectados) {
+                        llenarCamposEnPagina(data.camposDetectados);
+                    } else {
+                        alert("No se detectaron campos en la imagen.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al enviar la captura de pantalla:", error);
+                    alert("Hubo un error al procesar la captura de pantalla.");
+                });
+            } else {
+                alert("Error al capturar la pantalla.");
+            }
         });
     } catch (error) {
-        console.error("Error al iniciar el reconocimiento:", error);
+        console.error("Error al capturar y enviar la pantalla:", error);
     }
 }
 
-// Escuchar los campos detectados desde content.js y completar los datos
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-    if (request.action === "camposDetectados") {
-        const campos = request.campos;
+// Función para rellenar los campos detectados en el formulario de la página
+function llenarCamposEnPagina(camposDetectados) {
+    for (const [nombreCampo, valorCampo] of Object.entries(camposDetectados)) {
+        const campo = document.querySelector(`[name="${nombreCampo}"], [id="${nombreCampo}"]`);
+        if (campo) {
+            campo.value = valorCampo;
+        }
+    }
+    alert("Formulario rellenado automáticamente con OCR.");
+}
 
-        // Solicita los datos de la hoja de vida desde Django
-        try {
-            const response = await fetch('http://localhost:8000/api/hoja-de-vida/1/');  // Cambia '1' por el ID adecuado de la hoja de vida
-            const data = await response.json();
+// Escucha el evento de pegar en el área de pegado
+document.getElementById('image-paste-area').addEventListener('paste', async (event) => {
+    const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (const item of items) {
+        if (item.type.indexOf('image') === 0) {
+            const file = item.getAsFile();
 
-            // Rellena los campos en la página si hay coincidencias
-            for (const nombreCampo in campos) {
-                if (data[nombreCampo]) {
-                    campos[nombreCampo].value = data[nombreCampo];
+            // Crear un FormData y añadir la imagen pegada
+            const formData = new FormData();
+            formData.append('imagen', file, 'imagen_pegada.png');
+
+            // Enviar la imagen al servidor Django
+            try {
+                const response = await fetch('http://localhost:8000/api/subir-imagen-pegada/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Imagen pegada subida correctamente');
+                    console.log('Imagen almacenada:', data);
+                } else {
+                    alert('Error al subir la imagen pegada');
                 }
+            } catch (error) {
+                console.error('Error al subir la imagen pegada:', error);
             }
-
-            alert('Formulario rellenado automáticamente.');
-        } catch (error) {
-            console.error('Error al obtener los datos de la hoja de vida:', error);
-            alert('Hubo un error al obtener los datos de la hoja de vida.');
         }
     }
 });
