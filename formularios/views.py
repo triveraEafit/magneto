@@ -61,20 +61,30 @@ def crear_hoja_de_vida(request):
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
 
 
-def obtener_hoja_de_vida(request, id):
+
+def obtener_hoja_de_vida(request, id=None):
     try:
-        hoja_de_vida = HojaDeVida.objects.get(id=id)
-        data = {
-            'nombre': hoja_de_vida.nombre,
-            'apellido': hoja_de_vida.apellido,
-            'email': hoja_de_vida.email,
-            'telefono': hoja_de_vida.telefono,
-            'direccion': hoja_de_vida.direccion,
-            'experiencia': hoja_de_vida.experiencia,
-            'educacion': hoja_de_vida.educacion,
-            'habilidades': hoja_de_vida.habilidades,
-            'resumen': hoja_de_vida.resumen,
-        }
-        return JsonResponse(data)
+        if id is not None:
+            hoja_de_vida = HojaDeVida.objects.get(id=id)
+        else:
+            hoja_de_vida = HojaDeVida.objects.first()
+        
+        if hoja_de_vida:
+            data = {
+                'nombre': hoja_de_vida.nombre,
+                'apellido': hoja_de_vida.apellido,
+                'email': hoja_de_vida.email,
+                'telefono': hoja_de_vida.telefono,
+                'direccion': hoja_de_vida.direccion,
+                'experiencia': hoja_de_vida.experiencia,
+                'educacion': hoja_de_vida.educacion,
+                'habilidades': hoja_de_vida.habilidades,
+                'resumen': hoja_de_vida.resumen,
+            }
+            return JsonResponse(data)
+        else:
+            return JsonResponse({'error': 'No se encontraron datos.'}, status=404)
     except HojaDeVida.DoesNotExist:
         return JsonResponse({'error': 'Hoja de vida no encontrada.'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

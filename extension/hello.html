@@ -53,6 +53,8 @@
 </head>
 <body>
     <h1>CV MANAGER</h1>
+    <a href="datos_hoja_vida.html" target="_blank">Abrir datos_hoja_vida.html</a>
+
     <input type="file" id="cv-file" accept=".pdf,.doc,.docx">
     <button id="upload-cv">Subir Hoja de Vida</button>
     <button id="create-cv">Crear Hoja de Vida</button>
@@ -67,6 +69,26 @@
     <button class="icon-button" id="button3">
         <img src="imagenes/m.png" alt="Enlace 3">
     </button>
+    <!-- Modal -->
+<div class="modal fade" id="hojaDeVidaModal" tabindex="-1" role="dialog" aria-labelledby="hojaDeVidaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hojaDeVidaModalLabel">Hoja de Vida</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Los datos se llenarán aquí -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="popup.js"></script>
 </body>

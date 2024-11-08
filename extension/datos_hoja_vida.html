@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos del Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            background-color: #B0B3B7; /* Gris mate */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .datos {
+            margin-top: 20px;
+        }
+        .dato {
+            margin-bottom: 10px;
+        }
+        .dato label {
+            font-weight: bold;
+        }
+        .dato p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Datos del Usuario</h1>
+    <div class="datos" id="datos">
+        <!-- Los datos se insertarán aquí dinámicamente -->
+    </div>
+    <button id="copy-data">Copiar Datos</button>
+
+    <script src="popup.js"></script>
+</body>
+</html>

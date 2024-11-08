@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "CV MANAGER ",
-    "version": "1.7.1",
+    "name": "CV MANAGER",
+    "version": "1.7.5",
     "description": "Reconocer y autorrellenar formularios.",
     "permissions": [
         "storage"
@@ -14,10 +14,10 @@
             "128": "imagenes/icon.png"
         }
     },
-    
-    "web_accessible_resources": [{
-        
-        "resources": ["crear_hoja_de_vida.html"], 
-        "matches": ["<all_urls>"]
-    }]
+    "web_accessible_resources": [
+        {
+            "resources": ["crear_hoja_de_vida.html", "datos_hoja_vida.html"],
+            "matches": ["<all_urls>"]
+        }
+    ]
 }
