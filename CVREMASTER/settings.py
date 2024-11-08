@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'formularios',
     'rest_framework',
     'api',  
+    'Image_Transcription',  
 ]
 
 MIDDLEWARE = [

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reconocedor de Formularios</title>
+    <title>CV MANAGER</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,7 +68,15 @@
     <button id="create-cv">Crear Hoja de Vida</button>
     <button id="fill-form">Rellenar Formulario</button>
     <button id="reconocimiento">Iniciar Reconocimiento</button>
+    <button id="go-to-transcription">Ir a Transcription</button>
 
+    <script>
+        document.getElementById("go-to-transcription").addEventListener("click", function() {
+            window.location.href = "{% url 'transcription' %}";
+        });
+    </script>
+
+    
     <!-- Área para pegar la imagen -->
     <div id="image-paste-area" contenteditable="true">
         Pega la imagen aquí (Ctrl+V)
