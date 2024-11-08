@@ -5,29 +5,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transcripción de Imagen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7e9; /* Fondo verdoso suave */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #2b7a3d;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            display: inline-block;
+            color: #2b7a3d;
+            text-decoration: none;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            color: #2b7a3d;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Transcripción de Imagen</h1>
-    <!-- Botón para volver a otra página (ajusta href a la página que desees) -->
-    <a href="{% url 'nombre_de_la_pagina_anterior' %}">Volver</a>
-    
-    <!-- Formulario para subir una nueva imagen y transcribir -->
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Subir y transcribir</button>
-    </form>
+    <div class="container">
+        <h1>Transcripción de Imagen</h1>
+        <!-- Botón para volver a otra página (ajusta href a la página que desees) -->
+        <a href="{% url 'nombre_de_la_pagina_anterior' %}">Volver</a>
+        
+        <!-- Formulario para subir una nueva imagen y transcribir -->
+        <form method="POST" enctype="multipart/form-data">
+           
+            <button type="submit">Subir</button>
+        </form>
 
-    <!-- Botón para iniciar la transcripción de la última imagen subida -->
-    {% if ocr_result %}
-        <button id="transcribeLastImageButton">Iniciar transcripción con la última imagen</button>
-    {% endif %}
+        <!-- Botón para iniciar la transcripción de la última imagen subida -->
+        
+            <button id="transcribeLastImageButton">Iniciar transcripción con la última imagen</button>
+        
 
-    <!-- Resultado de OCR -->
-    {% if ocr_result %}
-        <h2>Texto Extraído:</h2>
-        <pre>{{ ocr_result }}</pre>
-    {% endif %}
+        <!-- Resultado de OCR -->
+        
+            <h2>Texto Extraído:</h2>
+            <pre> </pre>
+        
+    </div>
 
     <script>
         // Simulación de transcripción de la última imagen al hacer clic
